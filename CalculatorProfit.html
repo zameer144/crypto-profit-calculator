@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Crypto Profit Calculator</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #111;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #00f2ff;
+    }
+
+    .container {
+      background: #1e1e1e;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #00f2ff33;
+      width: 100%;
+      max-width: 420px;
+      animation: fadeIn 1s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: 600;
+      color: #ccc;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      background: #2a2a2a;
+      color: white;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      background: #00f2ff;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #00c4cc;
+    }
+
+    #result {
+      margin-top: 18px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    #diff {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 16px;
+      color: #ffc107;
+    }
+  </style>
+</head>
+<body>
+  <h2>💰 Futures Profit Calculator</h2>
+  <div class="container">
+    <label for="coin">Select Coin:</label>
+    <select id="coin" onchange="changeCoin()">
+      <option value="btcusdt">BTC/USDT</option>
+      <option value="ethusdt">ETH/USDT</option>
+      <option value="bnbusdt">BNB/USDT</option>
+    </select>
+
+    <label>Live Entry Price:</label>
+    <input type="number" id="entryPrice" readonly />
+
+    <label>Exit Price:</label>
+    <input type="number" id="exitPrice" placeholder="Enter exit price" oninput="showDifference()" />
+
+    <div id="diff"></div>
+
+    <label>Amount (USDT):</label>
+    <input type="number" id="amount" placeholder="e.g. 100" />
+
+    <label>Trade Mode:</label>
+    <select id="mode">
+      <option value="leverage">Leverage</option>
+      <option value="lot">Lot</option>
+    </select>
+
+    <label>Leverage or Lot:</label>
+    <input type="number" id="valueInput" placeholder="e.g. 125 or 0.1" />
+
+    <label>Position Type:</label>
+    <select id="position">
+      <option value="long">Long</option>
+      <option value="short">Short</option>
+    </select>
+
+    <button onclick="calculateProfit()">📈 Calculate Profit</button>
+
+    <h3 id="result"></h3>
+  </div>
+
+  <script>
+    let socket = null;
+
+    function changeCoin() {
+      const coin = document.getElementById('coin').value;
+      if (socket) socket.close();
+
+      socket = new WebSocket(`wss://fstream.binance.com/ws/${coin}@markPrice`);
+      socket.onmessage = function (event) {
+        const data = JSON.parse(event.data);
+        const price = parseFloat(data.p).toFixed(2);
+        document.getElementById('entryPrice').value = price;
+        showDifference(); // update diff when price changes
+      };
+    }
+
+    function showDifference() {
+      const entry = parseFloat(document.getElementById('entryPrice').value);
+      const exit = parseFloat(document.getElementById('exitPrice').value);
+      const diffElement = document.getElementById('diff');
+
+      if (!isNaN(entry) && !isNaN(exit)) {
+        const diff = (exit - entry).toFixed(2);
+        const color = diff >= 0 ? "#00ff99" : "#ff4d4d";
+        diffElement.innerHTML = `🔁 Difference: <span style="color:${color}">${diff}</span>`;
+      } else {
+        diffElement.innerHTML = "";
+      }
+    }
+
+    function calculateProfit() {
+      const entry = parseFloat(document.getElementById('entryPrice').value);
+      const exit = parseFloat(document.getElementById('exitPrice').value);
+      const amount = parseFloat(document.getElementById('amount').value);
+      const mode = document.getElementById('mode').value;
+      const value = parseFloat(document.getElementById('valueInput').value);
+      const position = document.getElementById('position').value;
+
+      if (isNaN(entry) || isNaN(exit) || isNaN(amount) || isNaN(value)) {
+        document.getElementById('result').innerText = "❌ Fill all fields!";
+        return;
+      }
+
+      let qty = 0;
+      let profit = 0;
+      let diff = (exit - entry);
+      if (position === "short") {
+        diff = -diff;
+      }
+
+      if (mode === "leverage") {
+        qty = amount / entry;
+        profit = qty * diff * value;
+      } else {
+        profit = diff * value * 1;
+      }
+
+      const resultText = profit >= 0
+        ? `✅ Profit: $${profit.toFixed(2)}`
+        : `🔻 Loss: $${profit.toFixed(2)}`;
+
+      document.getElementById('result').innerText = resultText;
+    }
+
+    changeCoin(); // initialize first socket
+  </script>
+</body>
+</html>
