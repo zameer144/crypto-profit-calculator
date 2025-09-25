@@ -2,196 +2,133 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Crypto Profit Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trading Signals Packages</title>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #111;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 40px 20px;
-    }
+    /* 🌑 Reset + Fonts */
+    * {margin:0; padding:0; box-sizing:border-box; font-family: 'Poppins', sans-serif;}
+    body {background:#0f172a; color:white; scroll-behavior:smooth;}
+    a {text-decoration:none; color:white;}
 
-    h2 {
-      font-size: 28px;
-      margin-bottom: 20px;
-      color: #00f2ff;
+    /* 🌐 Navbar */
+    nav {
+      display:flex; justify-content:space-between; align-items:center;
+      padding:20px 10%; background:#1e293b; position:sticky; top:0; z-index:1000;
     }
+    nav h1 {font-size:24px; font-weight:700; color:#38bdf8;}
+    nav ul {display:flex; list-style:none; gap:25px;}
+    nav ul li a {transition:0.3s;}
+    nav ul li a:hover {color:#38bdf8;}
 
-    .container {
-      background: #1e1e1e;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px #00f2ff33;
-      width: 100%;
-      max-width: 420px;
-      animation: fadeIn 1s ease-in;
+    /* 🏠 Hero Section */
+    .hero {
+      height:100vh; display:flex; flex-direction:column;
+      justify-content:center; align-items:center; text-align:center;
+      background: linear-gradient(135deg,#1e293b,#0f172a);
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+    .hero h2 {font-size:48px; margin-bottom:20px; animation:fadeInUp 1.2s ease;}
+    .hero p {font-size:18px; margin-bottom:30px; color:#cbd5e1;}
+    .btn {
+      background:#38bdf8; padding:12px 28px; border-radius:30px; color:#0f172a;
+      font-weight:600; transition:0.3s; cursor:pointer;
     }
+    .btn:hover {background:#0ea5e9; transform:scale(1.05);}
 
-    label {
-      display: block;
-      margin-top: 12px;
-      font-weight: 600;
-      color: #ccc;
+    /* 📦 Packages Section */
+    .packages {padding:80px 10%; background:#0f172a; text-align:center;}
+    .packages h2 {font-size:36px; margin-bottom:40px; color:#38bdf8;}
+    .cards {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:25px;
     }
-
-    input, select {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      background: #2a2a2a;
-      color: white;
+    .card {
+      background:#1e293b; padding:30px; border-radius:15px;
+      box-shadow:0 6px 15px rgba(0,0,0,0.4); transition:0.3s;
     }
+    .card:hover {transform:translateY(-10px); background:#334155;}
+    .card h3 {font-size:24px; margin-bottom:15px; color:#38bdf8;}
+    .card p {font-size:16px; margin-bottom:20px; color:#cbd5e1;}
+    .price {font-size:28px; font-weight:700; margin-bottom:15px; color:#fbbf24;}
 
-    button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 20px;
-      background: #00f2ff;
-      color: #000;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background 0.3s ease;
+    /* 📩 Contact Section */
+    .contact {padding:80px 10%; background:#1e293b; text-align:center;}
+    .contact h2 {font-size:36px; margin-bottom:30px; color:#38bdf8;}
+    form {max-width:500px; margin:0 auto; display:flex; flex-direction:column; gap:15px;}
+    input, textarea {
+      padding:12px 15px; border:none; border-radius:10px; outline:none;
+      background:#0f172a; color:white; resize:none;
     }
+    form .btn {align-self:center;}
 
-    button:hover {
-      background: #00c4cc;
-    }
+    /* 👣 Footer */
+    footer {padding:20px; text-align:center; background:#0f172a; color:#64748b;}
 
-    #result {
-      margin-top: 18px;
-      font-size: 18px;
-      font-weight: bold;
-      text-align: center;
-    }
-
-    #diff {
-      margin-top: 10px;
-      text-align: center;
-      font-size: 16px;
-      color: #ffc107;
+    /* ✨ Animations */
+    @keyframes fadeInUp {
+      from {opacity:0; transform:translateY(40px);}
+      to {opacity:1; transform:translateY(0);}
     }
   </style>
 </head>
 <body>
-  <h2>💰 Futures Profit Calculator</h2>
-  <div class="container">
-    <label for="coin">Select Coin:</label>
-    <select id="coin" onchange="changeCoin()">
-      <option value="btcusdt">BTC/USDT</option>
-      <option value="ethusdt">ETH/USDT</option>
-      <option value="bnbusdt">BNB/USDT</option>
-    </select>
 
-    <label>Live Entry Price:</label>
-    <input type="number" id="entryPrice" readonly />
+  <!-- Navbar -->
+  <nav>
+    <h1>TradeSignals</h1>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#packages">Packages</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 
-    <label>Exit Price:</label>
-    <input type="number" id="exitPrice" placeholder="Enter exit price" oninput="showDifference()" />
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <h2>Premium Trading Signals</h2>
+    <p>Boost your trading journey with accurate signals and strategies.</p>
+    <a href="#packages" class="btn">View Packages</a>
+  </section>
 
-    <div id="diff"></div>
+  <!-- Packages -->
+  <section class="packages" id="packages">
+    <h2>Our Packages</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Basic</h3>
+        <p>Get 5 signals per week with market analysis.</p>
+        <div class="price">$29/mo</div>
+        <a href="#contact" class="btn">Get Started</a>
+      </div>
+      <div class="card">
+        <h3>Standard</h3>
+        <p>Daily signals + risk management strategies.</p>
+        <div class="price">$59/mo</div>
+        <a href="#contact" class="btn">Get Started</a>
+      </div>
+      <div class="card">
+        <h3>Premium</h3>
+        <p>Full VIP signals + 24/7 support & coaching.</p>
+        <div class="price">$99/mo</div>
+        <a href="#contact" class="btn">Get Started</a>
+      </div>
+    </div>
+  </section>
 
-    <label>Amount (USDT):</label>
-    <input type="number" id="amount" placeholder="e.g. 100" />
+  <!-- Contact -->
+  <section class="contact" id="contact">
+    <h2>Contact Us</h2>
+    <form>
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea rows="5" placeholder="Your Message"></textarea>
+      <button type="submit" class="btn">Send Message</button>
+    </form>
+  </section>
 
-    <label>Trade Mode:</label>
-    <select id="mode">
-      <option value="leverage">Leverage</option>
-      <option value="lot">Lot</option>
-    </select>
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 TradeSignals. All Rights Reserved.</p>
+  </footer>
 
-    <label>Leverage or Lot:</label>
-    <input type="number" id="valueInput" placeholder="e.g. 125 or 0.1" />
-
-    <label>Position Type:</label>
-    <select id="position">
-      <option value="long">Long</option>
-      <option value="short">Short</option>
-    </select>
-
-    <button onclick="calculateProfit()">📈 Calculate Profit</button>
-
-    <h3 id="result"></h3>
-  </div>
-
-  <script>
-    let socket = null;
-
-    function changeCoin() {
-      const coin = document.getElementById('coin').value;
-      if (socket) socket.close();
-
-      socket = new WebSocket(`wss://fstream.binance.com/ws/${coin}@markPrice`);
-      socket.onmessage = function (event) {
-        const data = JSON.parse(event.data);
-        const price = parseFloat(data.p).toFixed(2);
-        document.getElementById('entryPrice').value = price;
-        showDifference(); // update diff when price changes
-      };
-    }
-
-    function showDifference() {
-      const entry = parseFloat(document.getElementById('entryPrice').value);
-      const exit = parseFloat(document.getElementById('exitPrice').value);
-      const diffElement = document.getElementById('diff');
-
-      if (!isNaN(entry) && !isNaN(exit)) {
-        const diff = (exit - entry).toFixed(2);
-        const color = diff >= 0 ? "#00ff99" : "#ff4d4d";
-        diffElement.innerHTML = `🔁 Difference: <span style="color:${color}">${diff}</span>`;
-      } else {
-        diffElement.innerHTML = "";
-      }
-    }
-
-    function calculateProfit() {
-      const entry = parseFloat(document.getElementById('entryPrice').value);
-      const exit = parseFloat(document.getElementById('exitPrice').value);
-      const amount = parseFloat(document.getElementById('amount').value);
-      const mode = document.getElementById('mode').value;
-      const value = parseFloat(document.getElementById('valueInput').value);
-      const position = document.getElementById('position').value;
-
-      if (isNaN(entry) || isNaN(exit) || isNaN(amount) || isNaN(value)) {
-        document.getElementById('result').innerText = "❌ Fill all fields!";
-        return;
-      }
-
-      let qty = 0;
-      let profit = 0;
-      let diff = (exit - entry);
-      if (position === "short") {
-        diff = -diff;
-      }
-
-      if (mode === "leverage") {
-        qty = amount / entry;
-        profit = qty * diff * value;
-      } else {
-        profit = diff * value * 1;
-      }
-
-      const resultText = profit >= 0
-        ? `✅ Profit: $${profit.toFixed(2)}`
-        : `🔻 Loss: $${profit.toFixed(2)}`;
-
-      document.getElementById('result').innerText = resultText;
-    }
-
-    changeCoin(); // initialize first socket
-  </script>
 </body>
 </html>
