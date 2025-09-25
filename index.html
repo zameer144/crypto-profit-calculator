@@ -3,67 +3,72 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trading Signals Packages</title>
+  <title>Gold Trading Signals</title>
   <style>
-    /* 🌑 Reset + Fonts */
-    * {margin:0; padding:0; box-sizing:border-box; font-family: 'Poppins', sans-serif;}
-    body {background:#0f172a; color:white; scroll-behavior:smooth;}
+    * {margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif;}
+    body {background:#0c0c0c; color:white; scroll-behavior:smooth;}
     a {text-decoration:none; color:white;}
 
-    /* 🌐 Navbar */
+    /* Navbar */
     nav {
       display:flex; justify-content:space-between; align-items:center;
-      padding:20px 10%; background:#1e293b; position:sticky; top:0; z-index:1000;
+      padding:20px 10%; background:#111; position:sticky; top:0; z-index:1000;
+      border-bottom:1px solid goldenrod;
     }
-    nav h1 {font-size:24px; font-weight:700; color:#38bdf8;}
+    nav h1 {font-size:26px; font-weight:700; color:gold;}
     nav ul {display:flex; list-style:none; gap:25px;}
     nav ul li a {transition:0.3s;}
-    nav ul li a:hover {color:#38bdf8;}
+    nav ul li a:hover {color:gold;}
 
-    /* 🏠 Hero Section */
+    /* Hero Section */
     .hero {
-      height:100vh; display:flex; flex-direction:column;
-      justify-content:center; align-items:center; text-align:center;
-      background: linear-gradient(135deg,#1e293b,#0f172a);
+      height:100vh; display:flex; flex-direction:column; justify-content:center;
+      align-items:center; text-align:center;
+      background: linear-gradient(135deg,#000,#1a1a1a);
     }
-    .hero h2 {font-size:48px; margin-bottom:20px; animation:fadeInUp 1.2s ease;}
-    .hero p {font-size:18px; margin-bottom:30px; color:#cbd5e1;}
+    .hero h2 {
+      font-size:52px; margin-bottom:20px;
+      background:linear-gradient(90deg,gold,#f5d76e); -webkit-background-clip:text; color:transparent;
+      animation:fadeInUp 1.2s ease;
+    }
+    .hero p {font-size:20px; margin-bottom:30px; color:#d1d1d1;}
     .btn {
-      background:#38bdf8; padding:12px 28px; border-radius:30px; color:#0f172a;
-      font-weight:600; transition:0.3s; cursor:pointer;
+      background:gold; padding:12px 30px; border-radius:30px; color:#000;
+      font-weight:600; transition:0.3s; cursor:pointer; border:none;
     }
-    .btn:hover {background:#0ea5e9; transform:scale(1.05);}
+    .btn:hover {background:#facc15; transform:scale(1.05);}
 
-    /* 📦 Packages Section */
-    .packages {padding:80px 10%; background:#0f172a; text-align:center;}
-    .packages h2 {font-size:36px; margin-bottom:40px; color:#38bdf8;}
+    /* Packages */
+    .packages {padding:80px 10%; background:#0c0c0c; text-align:center;}
+    .packages h2 {font-size:38px; margin-bottom:40px; color:gold;}
     .cards {
-      display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-      gap:25px;
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:30px;
     }
     .card {
-      background:#1e293b; padding:30px; border-radius:15px;
-      box-shadow:0 6px 15px rgba(0,0,0,0.4); transition:0.3s;
+      background:#111; padding:35px; border-radius:15px;
+      border:1px solid rgba(255,215,0,0.6);
+      transition:0.3s; box-shadow:0 5px 20px rgba(255,215,0,0.2);
     }
-    .card:hover {transform:translateY(-10px); background:#334155;}
-    .card h3 {font-size:24px; margin-bottom:15px; color:#38bdf8;}
-    .card p {font-size:16px; margin-bottom:20px; color:#cbd5e1;}
-    .price {font-size:28px; font-weight:700; margin-bottom:15px; color:#fbbf24;}
+    .card:hover {transform:translateY(-10px); box-shadow:0 10px 25px rgba(255,215,0,0.4);}
+    .card h3 {font-size:24px; margin-bottom:15px; color:gold;}
+    .card p {font-size:16px; margin-bottom:20px; color:#d4d4d4;}
+    .price {font-size:28px; font-weight:700; margin-bottom:15px; color:#facc15;}
 
-    /* 📩 Contact Section */
-    .contact {padding:80px 10%; background:#1e293b; text-align:center;}
-    .contact h2 {font-size:36px; margin-bottom:30px; color:#38bdf8;}
+    /* Contact */
+    .contact {padding:80px 10%; background:#111; text-align:center;}
+    .contact h2 {font-size:36px; margin-bottom:30px; color:gold;}
     form {max-width:500px; margin:0 auto; display:flex; flex-direction:column; gap:15px;}
     input, textarea {
-      padding:12px 15px; border:none; border-radius:10px; outline:none;
-      background:#0f172a; color:white; resize:none;
+      padding:14px; border:none; border-radius:8px; outline:none;
+      background:#0c0c0c; color:white; border:1px solid #333;
     }
+    input:focus, textarea:focus {border-color:gold;}
     form .btn {align-self:center;}
 
-    /* 👣 Footer */
-    footer {padding:20px; text-align:center; background:#0f172a; color:#64748b;}
+    /* Footer */
+    footer {padding:20px; text-align:center; background:#0c0c0c; color:#aaa; border-top:1px solid #333;}
 
-    /* ✨ Animations */
+    /* Animation */
     @keyframes fadeInUp {
       from {opacity:0; transform:translateY(40px);}
       to {opacity:1; transform:translateY(0);}
@@ -74,7 +79,7 @@
 
   <!-- Navbar -->
   <nav>
-    <h1>TradeSignals</h1>
+    <h1>GoldSignals</h1>
     <ul>
       <li><a href="#home">Home</a></li>
       <li><a href="#packages">Packages</a></li>
@@ -84,30 +89,30 @@
 
   <!-- Hero -->
   <section class="hero" id="home">
-    <h2>Premium Trading Signals</h2>
-    <p>Boost your trading journey with accurate signals and strategies.</p>
+    <h2>Gold Trading Signals</h2>
+    <p>Exclusive premium signals to maximize your profits in Gold market.</p>
     <a href="#packages" class="btn">View Packages</a>
   </section>
 
   <!-- Packages -->
   <section class="packages" id="packages">
-    <h2>Our Packages</h2>
+    <h2>Our Gold Packages</h2>
     <div class="cards">
       <div class="card">
-        <h3>Basic</h3>
-        <p>Get 5 signals per week with market analysis.</p>
+        <h3>Basic Gold</h3>
+        <p>3-4 gold signals per week with risk levels.</p>
         <div class="price">$29/mo</div>
         <a href="#contact" class="btn">Get Started</a>
       </div>
       <div class="card">
-        <h3>Standard</h3>
-        <p>Daily signals + risk management strategies.</p>
+        <h3>Standard Gold</h3>
+        <p>Daily gold signals + support & risk strategies.</p>
         <div class="price">$59/mo</div>
         <a href="#contact" class="btn">Get Started</a>
       </div>
       <div class="card">
-        <h3>Premium</h3>
-        <p>Full VIP signals + 24/7 support & coaching.</p>
+        <h3>Premium Gold VIP</h3>
+        <p>All day VIP signals, 1-on-1 mentorship & 24/7 support.</p>
         <div class="price">$99/mo</div>
         <a href="#contact" class="btn">Get Started</a>
       </div>
@@ -127,7 +132,7 @@
 
   <!-- Footer -->
   <footer>
-    <p>© 2025 TradeSignals. All Rights Reserved.</p>
+    <p>© 2025 GoldSignals. All Rights Reserved.</p>
   </footer>
 
 </body>
